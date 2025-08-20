@@ -1,0 +1,7 @@
+{
+  "name": "EcoScan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
