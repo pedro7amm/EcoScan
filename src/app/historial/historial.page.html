@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>EcoScan</ion-title>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Historial - EcoScan</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card id="contenedor-historial">
+    <ion-card-header>
+      <ion-card-title>Actividades</ion-card-title>
+    </ion-card-header>
+    <ion-list *ngIf="actividades.length > 0; else vacioActividades">
+      <ion-item *ngFor="let a of actividades">
+        <ion-thumbnail slot="start" *ngIf="a.tipo === 'foto'">
+          <img [src]="a.imagenDataUrl" alt="Foto" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>
+            {{ a.tipo | titlecase }}
+            <ng-container *ngIf="a.tipo === 'escaneo'">- {{ a.qrContenido }}</ng-container>
+            <ng-container *ngIf="a.tipo === 'foto'">- {{ a.titulo || 'Sin título' }}</ng-container>
+            <ng-container *ngIf="a.tipo === 'ubicacion'">- {{ a.referencia }}</ng-container>
+          </h2>
+          <p>{{ a.fechaIso | date:'short' }}</p>
+          <p *ngIf="a.tipo === 'foto' && a.descripcion">{{ a.descripcion }}</p>
+          <p *ngIf="a.tipo === 'ubicacion'">{{ a.lat }}, {{ a.lng }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ng-template #vacioActividades>
+      <ion-card-content>No hay actividades aún.</ion-card-content>
+    </ng-template>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" fill="outline" (click)="irMenuPrincipal()">
+          <ion-icon slot="start" name="home-outline"></ion-icon>
+          Menú principal
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="danger" (click)="limpiarHistorial()">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Limpiar historial
+        </ion-button>
+      </ion-col>
+      <ion-col size="12" class="ion-text-right">
+        <ion-button expand="block" fill="solid" color="primary" (click)="descargarPdf()">
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Descargar PDF
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p>EcoScan - Laboratorio 3</p>
+        <p>Programacion 4</p>
+      </ion-col>
+      <ion-col>
+        <p>Pedro Melendez Miranda</p>
+        <p>2025. Todos los derechos reservados.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
